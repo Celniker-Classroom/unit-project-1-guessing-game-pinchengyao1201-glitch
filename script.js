@@ -22,6 +22,7 @@ let scores = [];
 let startTime = 0;
 let totalTime = 0;
 let fastestTime = Infinity;
+let currentRange = 3;
 
 let playerName = prompt("Enter your name:");
 playerName = playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
@@ -31,21 +32,21 @@ document.getElementById("playBtn").addEventListener("click",
     function() {
         startTime = new Date().getTime();
         guessCount = 0
-        let range = 3;
+        currentRange = 3;
         let radios = document.getElementsByName("level");
         for (let i=0; i < radios.length; i++){
             if(radios[i].checked){
-                range = parseInt(radios[i].value);
+                currentRange = parseInt(radios[i].value);
             }
         }
         document.getElementById("guessBtn").disabled = false; 
         document.getElementById("giveUpBtn").disabled = false;
         document.getElementById("playBtn").disabled = true;
-        document.getElementById("msg").textContent = playerName + ", guess a number between 1 and " + range;
+        document.getElementById("msg").textContent = playerName + ", guess a number between 1 and " + currentRange;
         document.getElementById("guess").value = "";
         
         
-        answer = Math.floor(Math.random() * range) + 1;
+        answer = Math.floor(Math.random() * currentRange) + 1;
         for (let i = 0; i < radios.length; i++) {
             radios[i].disabled = true;
         }
@@ -105,7 +106,7 @@ document.getElementById("guessBtn").addEventListener("click",
 //Give up Button
 document.getElementById('giveUpBtn').addEventListener("click",
     function() {
-        updateScore(guessCount);
+        updateScore(currentRange);
         let radios = document.getElementsByName("level");
         guessCount = 0
         document.getElementById("guessBtn").disabled = true; 

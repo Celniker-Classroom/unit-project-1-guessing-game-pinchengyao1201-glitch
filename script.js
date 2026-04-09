@@ -28,6 +28,14 @@ let currentStreak = 0;
 let bestStreak = 0;
 const winSound = new Audio("Win.mp3");
 
+function playWinSound() {
+    winSound.currentTime = 0;
+    const playResult = winSound.play();
+    if (playResult && typeof playResult.catch === "function") {
+        playResult.catch(function() {});
+    }
+}
+
 let playerName = prompt("Enter your name:");
 playerName = playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
 
@@ -73,8 +81,7 @@ document.getElementById("guessBtn").addEventListener("click",
         let diff = Math.abs(input - answer);
 
         if (input === answer){
-            winSound.currentTime = 0;
-            winSound.play().catch(function() {});
+            playWinSound();
             document.getElementById("msg").textContent = "Correct! " + playerName + ", you got it in " + guessCount + " guesses!";
             document.getElementById("guessBtn").disabled = true;
             currentStreak ++;

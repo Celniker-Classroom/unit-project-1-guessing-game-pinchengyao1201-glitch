@@ -20,6 +20,7 @@ let totalGuess = 0;
 let totalWins = 0;
 let scores = [];
 let startTime = 0;
+let totalTime = 0;
 let fastestTime = Infinity;
 
 let playerName = prompt("Enter your name:");

@@ -4,6 +4,7 @@ function updateScore(score){
 
     document.getElementById("wins").textContent = "Total wins: " + totalWins;
     document.getElementById("avgScore").textContent = "Average Score: " + (totalGuess/totalWins).toFixed(1);
+    document.getElementById("streak").textContent = "Win Streak: " + currentStreak + " (Best: " + bestStreak + ")";
     scores.push(score)
     scores.sort((a, b) => a - b)
     document.getElementById("first").textContent = scores[0]
@@ -23,6 +24,9 @@ let startTime = 0;
 let totalTime = 0;
 let fastestTime = Infinity;
 let currentRange = 3;
+let currentStreak = 0;
+let bestStreak = 0;
+const winSound = new Audio("Win.mp3");
 
 let playerName = prompt("Enter your name:");
 playerName = playerName.charAt(0).toUpperCase() + playerName.slice(1).toLowerCase();
@@ -69,8 +73,14 @@ document.getElementById("guessBtn").addEventListener("click",
         let diff = Math.abs(input - answer);
 
         if (input === answer){
+            winSound.currentTime = 0;
+            winSound.play().catch(function() {});
             document.getElementById("msg").textContent = "Correct! " + playerName + ", you got it in " + guessCount + " guesses!";
             document.getElementById("guessBtn").disabled = true;
+            currentStreak ++;
+            if (currentStreak > bestStreak) {
+                bestStreak = currentStreak;
+            }
             updateScore(guessCount);
             let radios = document.getElementsByName("level");
             for (let i = 0; i < radios.length; i++) {
@@ -106,6 +116,7 @@ document.getElementById("guessBtn").addEventListener("click",
 //Give up Button
 document.getElementById('giveUpBtn').addEventListener("click",
     function() {
+        currentStreak = 0;
         updateScore(currentRange);
         let radios = document.getElementsByName("level");
         guessCount = 0
@@ -119,6 +130,12 @@ document.getElementById('giveUpBtn').addEventListener("click",
         }
     }
 )
+
+document.getElementById("guess").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        document.getElementById("guessBtn").click();
+    }
+});
 
 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 

@@ -9,6 +9,7 @@ function updateScore(score){
     document.getElementById("first").textContent = scores[0]
     document.getElementById("second").textContent = scores[1]
     document.getElementById("third").textContent = scores[2]
+    
 
 }
 
@@ -18,6 +19,7 @@ let guessCount = 0;
 let totalGuess = 0;
 let totalWins = 0;
 let scores = [];
+let totalTime = 0;
 let startTime = 0;
 let fastestTime = Infinity;
 
@@ -80,6 +82,8 @@ document.getElementById("guessBtn").addEventListener("click",
                 fastestTime = timeTaken;
                 document.getElementById("fastest").textContent = "Fastest Game: " + fastestTime.toFixed(2) + " seconds";
             }
+            totalTime += timeTaken;
+            document.getElementById("avgTime").textContent = "Average Time: " + (totalTime/totalWins).toFixed(2) + " seconds";
             return;
         } 
         if (diff <= 2){ 

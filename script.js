@@ -19,7 +19,6 @@ let guessCount = 0;
 let totalGuess = 0;
 let totalWins = 0;
 let scores = [];
-let totalTime = 0;
 let startTime = 0;
 let fastestTime = Infinity;
 
